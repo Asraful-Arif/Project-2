@@ -1,8 +1,8 @@
 import type { LucideIcon } from 'lucide-react'
-import React from 'react'
+
 interface DashProps{
     label:string,
-    value:string,
+    value:string | number,
     trend: string
   icon: LucideIcon,
   bg: string,

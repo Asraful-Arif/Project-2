@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { tasks } from '../../Data/dummy'
 import ReactApexChart from 'react-apexcharts'
 

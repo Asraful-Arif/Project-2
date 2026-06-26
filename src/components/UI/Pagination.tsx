@@ -1,7 +1,11 @@
+import { Table } from '@tanstack/react-table';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
+interface PagiNationProPs<TData>{
+    table:Table<TData>,
+    dataLength:number}
 
-const Pagination = ({table,dataLength}) => {
+const Pagination = <TData,>({table,dataLength}:PagiNationProPs<TData>) => {
     const {pageIndex,pageSize} = table.getState().pagination;
     const start = pageIndex * pageSize + 1;
     const end = Math.min((pageIndex +1) * pageSize,dataLength)

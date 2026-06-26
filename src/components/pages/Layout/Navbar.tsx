@@ -1,7 +1,6 @@
 
 import { Bell, CircleCheck, Plus, SquareArrowOutUpRight } from 'lucide-react'
-import React from 'react'
-import { users } from './../../../Data/dummy';
+
 import type { User } from '../../../Types/types';
 
 const Navbar = () => {

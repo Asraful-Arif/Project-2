@@ -21,7 +21,7 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Path Alias (Eita dorkar) */
-    "baseUrl": ".",
+
     "paths": {
       "@/*": ["./src/*"]
     }

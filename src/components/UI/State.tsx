@@ -11,7 +11,7 @@ interface DashProps{
 
 const State = ({label,value,trend,icon:Icon,bg,iconColor}:DashProps) => {
   return (
-    <div className='border border-slate-200 rounded shadow-xl '>
+    <div className='border border-slate-200 rounded shadow-xl m-2'>
         <div className='flex flex-col  space-y-2'>
             <div className='flex items-start justify-between gap-4 p-2 '>
                 <div>

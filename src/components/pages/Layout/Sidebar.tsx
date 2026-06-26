@@ -20,7 +20,13 @@ const Sidebar = () => {
           <NavLink
             key={item.path}
             to={item.path}
-            className="flex gap-3 px-3 py-2.5  items-center  space-y-2 focus:bg-slate-50 focus:ring focus:ring-blue-300 rounded hover:bg-slate-200 z-60"
+            className={({ isActive }) =>
+              `flex gap-3 px-3 py-2.5 items-center rounded hover:bg-slate-200 transition-colors ${
+                isActive
+                  ? "bg-slate-50 ring-1 ring-blue-300 font-bold"
+                  : "text-slate-700"
+              }`
+            }
           >
             <item.Icon size={20} />
             <span className="text-xl text-center mb-2.5 font-semibold">

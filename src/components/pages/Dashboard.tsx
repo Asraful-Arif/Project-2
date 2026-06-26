@@ -47,13 +47,13 @@ const Dashboard = () => {
       <div>
         <h1 className="text-xl text-slate-800 font-semibold ">DashBoard</h1>
         <LiveClock />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
           {cartItem.map((item) => (
             <State key={item.label} {...item} />
           ))}
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 m-2">
         <DonutChart />
         <BarChart />
       </div>

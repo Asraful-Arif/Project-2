@@ -4,6 +4,7 @@ import type { Task, User } from "../../Types/types";
 interface CardProps {
   task: Task;
   members: User[];
+  onOpen: (task: Task) => void;
 }
 const priorityColor: Record<string, string> = {
   low: "bg-gray-100 text-gray-500",
@@ -12,22 +13,26 @@ const priorityColor: Record<string, string> = {
   critical: "bg-red-100 text-red-600",
 };
 
-const TaskCard = ({ task, members }: CardProps) => {
+const TaskCard = ({ task, members,onOpen }: CardProps) => {
   const assignee = members.find((m) => m.id === task.assigneeId);
   const completedSubtasks = task.subtasks.filter((s) => s.done).length;
-  const { attributes, listeners, setNodeRef, transform } =
+  const { attributes, listeners, setNodeRef, transform,isDragging  } =
     useDraggable({ id: task.id });
   const style = transform
-    ? { transform: `translate (${transform.x}px,${transform.y}px)` }
+    ? { transform: `translate(${transform.x}px,${transform.y}px)` }
     : undefined;
   return (
     <div
       ref={setNodeRef}
-      style={style}
+      style={{ ...style, touchAction: "none" }}
       {...listeners}
       {...attributes}
+      onClick={() =>  {
+        if (!isDragging) onOpen(task); 
+      }}
       className="bg-white border-slate-400 rounded-lg shadow-sm cursor-grab p-2"
     >
+     
       {task.tags.length > 0 && (
         <div className=" flex flex-wrap gap-1 mb-2">
           {task.tags.map((tag) => (

@@ -4,7 +4,7 @@ import Login from "./components/pages/Login";
 
 import Dashboard from "./components/pages/Dashboard";
 import MainLayout from "./components/pages/Layout/MainLayout";
-import Members from "./components/pages/Members";
+
 import ProjectDetails from "./components/pages/ProjectDetails";
 import Projects from "./components/pages/Projects";
 import type { User } from "./Types/types";
@@ -43,16 +43,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/members"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Members />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
+
         <Route
           path="/Projects/:id"
           element={
@@ -63,7 +54,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        
+
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>

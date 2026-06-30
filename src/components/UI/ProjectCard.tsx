@@ -1,6 +1,7 @@
 import { Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import type { Project, Task, User } from "../../Types/types";
+import { toast } from "sonner";
 
 interface CardProps {
   projects: Project;
@@ -20,8 +21,20 @@ const ProjectCard = ({ projects, tasks, members, onDelete }: CardProps) => {
       ? Math.round((completedTask / projectsTask.length) * 100)
       : 0;
   const handleDelete = () => {
-    onDelete(projects.id);
-  };
+  toast("Are You Sure to Delete This Project?", {
+    action: {
+      label: "Delete",
+      onClick: () => {
+        onDelete(projects.id);
+        toast.error("Project deleted");
+      },
+    },
+    cancel: {
+      label: "Cancel",
+      onClick: () => {},
+    },
+  });
+};
   return (
     <div
       onClick={() => navigate(`/projects/${projects.id}`)}
@@ -35,7 +48,7 @@ const ProjectCard = ({ projects, tasks, members, onDelete }: CardProps) => {
           />
           <h3 className="text-xl font-semibold ">{projects.name}</h3>
         </div>
-        <button
+        <button title="Delete"
           onClick={(e) => {
             e.stopPropagation();
             handleDelete();
@@ -72,5 +85,6 @@ const ProjectCard = ({ projects, tasks, members, onDelete }: CardProps) => {
     </div>
   );
 };
+
 
 export default ProjectCard;

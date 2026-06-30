@@ -1,55 +1,74 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import { tasks as InitialTAsks, projects, users } from "../../Data/dummy";
+import { users } from "../../Data/dummy";
 
 import type { Task } from "../../Types/types";
 
+import { useProjects } from "../ui/ProjectContext";
+import { Button } from "../ui/button";
 import BoardView from "./BoardView";
+import MembersView from "./MembersView";
 import RowView from "./Rowview";
 
 const ProjectDetails = () => {
+  const currentUser = JSON.parse(localStorage.getItem("taskflow_user") || "{}");
+const isAdmin = currentUser.role === "admin";
+  const { projectList, taskList, updateTasks } = useProjects();
   const { id } = useParams();
-  const project = projects.find((p) => p.id === id);
-  const [tasks, setTasks] = useState<Task[]>(
-    InitialTAsks.filter((t) => t.projectId === id),
-  );
-  const [view, setView] = useState<"board" | "row">("board");
+  const project = projectList.find((p) => p.id === id);
+  const tasks = taskList.filter((t) => t.projectId === id);
+
+  const setTasks = (updated: Task[]) => {
+    const otherTasks = taskList.filter((t) => t.projectId !== id);
+    updateTasks([...otherTasks, ...updated]);
+  };
+  const [view, setView] = useState<"board" | "row" | "members">("board");
   if (!project) return <div>Project not found</div>;
   const members = users.filter((u) => project.memberIds.includes(u.id));
-
+ 
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
           <div className="w-5 h-5 " style={{ background: project.color }} />
           <h1>{project.name}</h1>
-          <span>{project.description}</span>
+          <span className="hidden lg:block">{project.description}</span>
         </div>
         <div className="flex gap-3">
-          <button
+          <Button
             onClick={() => setView("board")}
-            className={`px-4 py-2 rounded-lg ${view === "board" ? "bg-blue-500 text-white" : "bg-white border border-slate-400"}`}
+            className={`px-4 py-2 rounded-lg ${view === "board" ? "bg-blue-500 text-white" : " border border-slate-400"}`}
           >
             board
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => setView("row")}
-            className={`px-4 py-2 rounded-lg ${view === "row" ? "bg-blue-500 text-white" : "bg-white border border-slate-400"}`}
+            className={`px-4 py-2 rounded-lg ${view === "row" ? "bg-blue-500 text-white" : " border border-slate-400"}`}
           >
             row
-          </button>
+          </Button>
+          {isAdmin && (
+            <Button
+            onClick={() => setView("members")}
+            className={`px-4 py-2 rounded-lg ${view === "members" ? "bg-blue-500 text-white" : " border border-slate-400"}`}
+          >
+            members
+          </Button>
+          )}
         </div>
       </div>
-      {view === "board" ? (
+      {view === "board" && (
         <BoardView
           tasks={tasks}
           setTasks={setTasks}
           members={members}
           projectId={id!}
         />
-      ) : (
+      )}
+      {view === "row" && (
         <RowView tasks={tasks} setTasks={setTasks} members={members} />
       )}
+      {view === "members" && <MembersView projectId={id!} />}
     </div>
   );
 };

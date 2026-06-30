@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { Project } from "../../Types/types";
+import { Button } from "./button";
 interface CardProps {
   onAdd: (projects: Project) => void;
   onClose: () => void;
@@ -37,9 +38,9 @@ const AddProjectCard = ({ onAdd, onClose }: CardProps) => {
         <div className="max-w-md w-full bg-white rounded-lg px-4 py-7 border border-blue-300 shadow-lg">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-2xl font-bold">Create Project</h2>
-          <button title="button" type="button"  onClick={onClose}>
+          <Button title="button" type="button"  onClick={onClose}>
             <X size={18} />
-          </button>
+          </Button>
         </div>
         <div>
           <label className="text-xl font-semibold block mb-1">Name</label>

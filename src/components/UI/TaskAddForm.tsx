@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { Task, User } from "../../Types/types";
+import SubtaskList from "./SubTask";
 
 interface TaskModalProps {
   onClose: () => void;
@@ -9,7 +10,7 @@ interface TaskModalProps {
   projectId: string;
   members: User[];
   initialStatus?: Task["status"];
-  editTask?:Task
+  editTask?: Task;
 }
 
 const TaskAddForm = ({
@@ -18,16 +19,22 @@ const TaskAddForm = ({
   projectId,
   members,
   initialStatus = "todo",
-   editTask
-
+  editTask,
 }: TaskModalProps) => {
-  const [title, setTitle] = useState( editTask?.title ?? "");
+  const [title, setTitle] = useState(editTask?.title ?? "");
   const [description, setDescription] = useState(editTask?.description ?? "");
-  const [status, setStatus] = useState<Task["status"]>(editTask?.status ?? initialStatus);
-  const [priority, setPriority] = useState<Task["priority"]>( editTask?.priority ?? "medium");
-  const [assigneeId, setAssigneeId] = useState(editTask?.assigneeId ??  members[0]?.id ?? "");
+  const [status, setStatus] = useState<Task["status"]>(
+    editTask?.status ?? initialStatus,
+  );
+  const [priority, setPriority] = useState<Task["priority"]>(
+    editTask?.priority ?? "medium",
+  );
+  const [assigneeId, setAssigneeId] = useState(
+    editTask?.assigneeId ?? members[0]?.id ?? "",
+  );
   const [dueDate, setDueDate] = useState(editTask?.dueDate ?? "");
-  const [tags, setTags] = useState(editTask?.tags?.join(', ') ?? "");
+  const [tags, setTags] = useState(editTask?.tags?.join(", ") ?? "");
+  const [subtasks, setSubtasks] = useState(editTask?.subtasks ?? []);
 
   const handleSave = () => {
     if (!title.trim()) {
@@ -35,7 +42,7 @@ const TaskAddForm = ({
       return;
     }
     const newTask: Task = {
-      id:editTask?.id ?? `t${Date.now()}`,
+      id: editTask?.id ?? `t${Date.now()}`,
       projectId,
       title,
       description,
@@ -43,8 +50,12 @@ const TaskAddForm = ({
       priority,
       assigneeId,
       dueDate,
-      tags: tags.split(',').map(t => t.trim()).filter(Boolean).slice(0, 3),
-      subtasks:  editTask?.subtasks ?? [],
+      tags: tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean)
+        .slice(0, 3),
+      subtasks: subtasks,
     };
     onSave(newTask);
     toast.success("Task saved successfully");
@@ -55,7 +66,9 @@ const TaskAddForm = ({
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-xl">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="font-semibold text-gray-800 text-lg">{editTask ? 'Edit Task' : 'New Task'}</h2>
+          <h2 className="font-semibold text-gray-800 text-lg">
+            {editTask ? "Edit Task" : "New Task"}
+          </h2>
           <button
             title="button"
             onClick={onClose}
@@ -183,10 +196,12 @@ const TaskAddForm = ({
               className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-300"
             />
           </div>
+          <SubtaskList subtasks={subtasks} onChange={setSubtasks} />
         </div>
 
         <div className="flex gap-2 justify-end mt-6">
-          <button title="button"
+          <button
+            title="button"
             onClick={onClose}
             className="px-4 py-2 text-sm text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-50"
           >

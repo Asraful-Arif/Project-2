@@ -11,14 +11,14 @@ interface DashProps{
 
 const State = ({label,value,trend,icon:Icon,bg,iconColor}:DashProps) => {
   return (
-    <div className='border border-slate-200 rounded shadow-xl m-2'>
+    <div className='border border-slate-200 rounded-lg shadow-xl  bg-white m-2'>
         <div className='flex flex-col  space-y-2'>
-            <div className='flex items-start justify-between gap-4 p-2 '>
+            <div className='flex items-start justify-between gap-2 p-2 '>
                 <div>
                   <p className='text-xl text-slate-800  font-semibold'>{label}</p>
                 </div>
-                <div className={`p-3 rounded-lg ${bg} ${iconColor} `}>
-                  <span ><Icon size={18} /></span>
+                <div className={`p-2 rounded-lg ${bg} ${iconColor} shrink-0`}>
+                  <span ><Icon size={16} /></span>
 
                 </div>
             </div>

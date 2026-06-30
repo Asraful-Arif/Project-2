@@ -1,10 +1,10 @@
 import { Briefcase, CheckCheck, Clock, ListTodo } from "lucide-react";
 import { projects, tasks } from "../../Data/dummy";
-import BarChart from "../UI/BarChart";
-import DonutChart from "../UI/DonutChart";
-import LineChart from "../UI/LineChart";
-import LiveClock from "../UI/LiveClock";
-import State from "../UI/State";
+import BarChart from "../ui/BarChart";
+import DonutChart from "../ui/DonutChart";
+import LineChart from "../ui/LineChart";
+import LiveClock from "../ui/LiveClock";
+import State from "../ui/State";
 
 const cartItem = [
   {
@@ -45,21 +45,25 @@ const Dashboard = () => {
   return (
     <div className="overflow-y-auto m-2">
       <div>
-        <h1 className="text-xl text-slate-800 font-semibold ">DashBoard</h1>
-        <LiveClock />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
+        <div className="m-3">
+          <h1 className="text-2xl text-slate-800 font-bold ">DashBoard</h1>
+        <LiveClock/>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
           {cartItem.map((item) => (
             <State key={item.label} {...item} />
           ))}
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 m-2">
+     <div className="m-1">
+       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
         <DonutChart />
         <BarChart />
       </div>
-      <div>
+      <div className="mt-4">
         <LineChart />
       </div>
+     </div>
     </div>
   );
 };

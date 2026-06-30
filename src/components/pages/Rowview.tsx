@@ -3,8 +3,10 @@ import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { Task, User } from "../../Types/types";
-import Table from "../UI/Table";
-import TaskAddForm from "../UI/TaskAddForm";
+
+
+import Table from "../ui/Table";
+import TaskAddForm from "../ui/TaskAddForm";
 interface RowViewProps {
   tasks: Task[];
   setTasks: (tasks: Task[]) => void;
@@ -40,7 +42,7 @@ const RowView = ({ tasks, setTasks, members }: RowViewProps) => {
     {
       accessorKey: "status",
       header: "Status",
-      cell: ({ getValue }: { getValue: () => any }) => {
+      cell: ({ getValue }: { getValue: () => any }) => { 
         const value = getValue() as string;
         return (
           <span

@@ -8,8 +8,11 @@ import {
 } from "@tanstack/react-table";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import Pagination from "./pagination";
 
-import Pagination from "./Pagination";
+
+
+
 interface TableProps<TData> {
   columns: ColumnDef<TData, any>[];
   data: TData[];

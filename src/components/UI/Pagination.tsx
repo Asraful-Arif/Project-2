@@ -1,5 +1,6 @@
 import { Table } from '@tanstack/react-table';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from './button';
 
 interface PagiNationProPs<TData>{
     table:Table<TData>,
@@ -16,8 +17,8 @@ const Pagination = <TData,>({table,dataLength}:PagiNationProPs<TData>) => {
             {start} To {end} / {dataLength} users
         </div>
         <div className='flex gap-2'>
-            <button onClick={()=>table.previousPage()} disabled={!table.getCanPreviousPage()}><ChevronLeft size={18}/></button>
-            <button onClick={()=>table.nextPage()} disabled={!table.getCanNextPage()}><ChevronRight size={18}/></button>
+            <Button onClick={()=>table.previousPage()} disabled={!table.getCanPreviousPage()}><ChevronLeft size={18}/></Button>
+            <Button onClick={()=>table.nextPage()} disabled={!table.getCanNextPage()}><ChevronRight size={18}/></Button>
         </div>
     </div>
   )
